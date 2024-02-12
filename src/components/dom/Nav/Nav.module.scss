@@ -1,0 +1,159 @@
+$text-size: 1rem;
+$height: $text-size * 1.85;
+$mute-size: $text-size;
+
+.navbar {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 1.5rem 0;
+  color: inherit;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .mute {
+    position: relative;
+    opacity: 1;
+    border-bottom: 2px white solid;
+    padding: 0 2px;
+
+    button {
+      cursor: pointer;
+      display: flex;
+      border: none;
+      background-color: none;
+      background: none;
+      height: $mute-size;
+      width: $mute-size;
+      gap: 0.15rem;
+
+      .bar {
+        width: 33%;
+        height: 100%;
+        background-color: white;
+
+        transform-origin: bottom;
+        transform: scaleY(0.125);
+
+        transition: opacity 0.75s ease-in-out;
+        animation: mute-animation 0.75s ease-in-out infinite alternate-reverse;
+      }
+    }
+
+    &.muted {
+      opacity: 0.5;
+      .bar {
+        animation-play-state: paused;
+      }
+    }
+  }
+
+  .switch {
+    cursor: pointer;
+    display: flex;
+    height: $height;
+    width: $height;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+
+    // DISABLING THE SWITCH FOR NOW
+    opacity: 0;
+    pointer-events: none;
+    touch-action: none;
+
+    &.light {
+      .icon {
+        transform: translateY(-100%);
+
+        &:first-of-type {
+          opacity: 0;
+        }
+
+        &:nth-of-type(2) {
+          opacity: 1;
+        }
+      }
+    }
+
+    .icon {
+      transform: translateY(0);
+      transition: transform 0.5s ease-in-out, opacity 0.35s ease-in-out;
+
+      height: $height;
+      width: $height;
+      display: grid;
+      place-items: center;
+
+      &:first-of-type {
+        opacity: 1;
+        svg {
+          height: 100%;
+        }
+      }
+
+      &:nth-of-type(2) {
+        padding: 0.15rem;
+        opacity: 0;
+        svg {
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  ul {
+    display: flex;
+    gap: 3rem;
+
+    li {
+      list-style: none;
+      font-size: $text-size;
+
+      a {
+        position: relative;
+
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: -0.125rem;
+          height: 0.125rem;
+          background-color: white;
+
+          transform-origin: bottom center;
+          transform: scaleY(0);
+
+          transition: transform 0.25s ease-in-out;
+        }
+
+        &.active::after {
+          transform: scaleY(1);
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-left: 0;
+
+    ul {
+      justify-content: space-evenly;
+      gap: 1.5rem;
+    }
+  }
+}
+
+@keyframes mute-animation {
+  0% {
+    transform: initial;
+  }
+
+  0% {
+    transform: scaleY(1);
+  }
+}
